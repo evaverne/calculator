@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[16]:
+# In[11]:
 
 def isfloat(value):
     try:
@@ -15,7 +15,7 @@ while True:
     list1 = (notation)
     iscorrect = True
     for item in list1:
-        if item == '/' or item == '*' or item == '+' or item == '-' or item == ' ' or item == '(' or item == ')':
+        if item == '/' or item == '*' or item == '+' or item == '-' or item == ' ' or item == '(' or item == ')' or item == '.':
             continue
         elif isfloat(item):
             continue
@@ -51,6 +51,10 @@ for item in list1:
             elif list2[-1] == ')':
                 list2.append('*')
                 list2.append(item)
+            elif list2[-1] == '.':
+                action1 = [list2[-1]]+[item]
+                list2.pop()
+                list2.append(''.join(action1))
             else:
                 list2.append(item)
     elif item == '(':
@@ -62,13 +66,21 @@ for item in list1:
     elif item == ' ':
         list2.append(item)
         list2.pop()
+    elif item == '.':
+        if isfloat(list2[-1]):
+            action1 = [list2[-1]]+[item]
+            list2.pop()
+            list2.append(''.join(action1))
+        else:
+            list2.append(item)
+            list2.pop()
     else:
         list2.append(item)
 
 #print(list2)
 
 
-# In[17]:
+# In[12]:
 
 digits = []
 symbols = []
@@ -110,31 +122,12 @@ while len(symbols) > 0:
     thelast = symbols.pop()
     digits.append(thelast)
     
-'''print(digits)
-print(symbols)'''
+#print(digits)
+#print(symbols)
 
 
-# In[18]:
+# In[13]:
 
-'''while True:
-    notation = input('Please, insert Reverse Polish Notation: ')
-    l = []
-    l = notation.split(' ')
-    iscorrect = True
-    for item in l:
-        if item == '/' or item == '*' or item == '+' or item == '-':
-            continue
-        elif isfloat(item):
-            continue
-        else:
-            iscorrect = False
-    
-    if iscorrect == True:
-        break
-    else:
-        print("Doh!")
-        continue'''
-        
 stack = []
 l = digits
 
