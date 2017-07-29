@@ -1,0 +1,220 @@
+
+# coding: utf-8
+
+# In[16]:
+
+def isfloat(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
+while True:
+    notation = input('Please, insert mathematical notation: ')
+    list1 = (notation)
+    iscorrect = True
+    for item in list1:
+        if item == '/' or item == '*' or item == '+' or item == '-' or item == ' ' or item == '(' or item == ')':
+            continue
+        elif isfloat(item):
+            continue
+        else:
+            iscorrect = False
+    
+    if iscorrect == True:
+        break
+    else:
+        print("Please, remove letters from your notation, computer can not operate with it.")
+        continue
+
+list1 = list(notation)
+list2 = []
+
+
+for item in list1:
+    if isfloat(item):
+        if not list2:
+            list2.append(item)
+        elif len(list2) == 1:
+            if isfloat(list2[0]):
+                action1 = [list2[0]]+[item]
+                list2.pop()
+                list2.append(''.join(action1))
+            else:
+                list2.append(item)  
+        elif len(list2) > 1:
+            if isfloat(list2[-1]):
+                action1 = [list2[-1]]+[item]
+                list2.pop()
+                list2.append(''.join(action1))
+            elif list2[-1] == ')':
+                list2.append('*')
+                list2.append(item)
+            else:
+                list2.append(item)
+    elif item == '(':
+        if not list2:
+            list2.append(item)
+        else:
+            list2.append('*')
+            list2.append(item)
+    elif item == ' ':
+        list2.append(item)
+        list2.pop()
+    else:
+        list2.append(item)
+
+#print(list2)
+
+
+# In[17]:
+
+digits = []
+symbols = []
+
+def priority(item):
+    if item == '(':
+        return 1
+    elif item == '+' or item == '-':
+        return 2
+    elif item == '*' or item == '/':
+        return 3
+    elif item == ')':
+        return 0
+
+for item in list2:
+    if isfloat(item):
+        digits.append(item)
+    else:
+        if priority(item) == 1:
+            symbols.append(item)
+        elif priority(item) >= 2:
+            if not symbols:
+                symbols.append(item)
+            elif priority(symbols[-1]) < priority(item):
+                symbols.append(item)
+            else:
+                while len(symbols) > 0 and priority(symbols[-1]) >= priority(item):
+                    temporary = symbols.pop()
+                    digits.append(temporary)
+                symbols.append(item)
+        elif priority(item) == 0:
+            while symbols[-1] != '(':
+                temporary = symbols.pop()
+                digits.append(temporary)
+            symbols.pop()
+
+
+while len(symbols) > 0:
+    thelast = symbols.pop()
+    digits.append(thelast)
+    
+'''print(digits)
+print(symbols)'''
+
+
+# In[18]:
+
+'''while True:
+    notation = input('Please, insert Reverse Polish Notation: ')
+    l = []
+    l = notation.split(' ')
+    iscorrect = True
+    for item in l:
+        if item == '/' or item == '*' or item == '+' or item == '-':
+            continue
+        elif isfloat(item):
+            continue
+        else:
+            iscorrect = False
+    
+    if iscorrect == True:
+        break
+    else:
+        print("Doh!")
+        continue'''
+        
+stack = []
+l = digits
+
+for z in l:
+    if z == '*':
+        a = stack.pop()
+        b = stack.pop()
+        stack.append(float(a) * float(b)) 
+    elif z == '+':
+        a = stack.pop()
+        b = stack.pop()
+        stack.append(float(a) + float(b))
+    elif z == '-':
+        a = stack.pop()
+        b = stack.pop()
+        stack.append(float(b) - float(a))
+    elif z == '/':
+        a = stack.pop()
+        b = stack.pop()
+        stack.append(float(b) / float(a))
+    else:
+        stack.append(z)
+
+for thing in stack:
+    if len(stack) != 1:
+        print ('Error. Try again!')
+        break
+    else:
+        print (stack[0])
+
+
+# In[1]:
+
+'''How to divide my list:
+There are 3 possible scenario. Spacing matters
+1) A*B+(C-D)
+2) A * B + (C - D)
+3) A * B + ( C - D )
+
+3d way is rather obvious. It's just important to put a clear instruction before the input holder. The main disadvantage 
+is that it is not natural, not user-friendly to ask people to put space in between every and each symbol. 
+
+Before I come back to the 2nd way, which seems more complicated to me, I will describe the first one. 
+
+Here A*B+(C-D) a computer should distinguish between the number and the symbol. Thus it will add space every time it 
+meets the following symbol. 
+
+The rules are:
+1. Spaces should be placed between symbols. 
+[...45 - ( 34 +...]
+2. Spaces should be placed between symbols and numbers.
+[123 + 321]
+3. Neighboring digits should not be divided. 
+['123']
+4. Every symbol should be checked. It is unavoidable. 
+
+The algorythm:
+1. First item should go to the list:
+l = ['1']
+2. Starting from the second item, you have to check: 
+    2.2. Is it float or symbol?
+        2.3. if number:
+            2.4. Check the previous item. If it's float:
+                make a seperate list of all the previous items
+                join them(it takes only one argument)
+            2.5. If it's a symbol:
+                put the space between them (not sure yet whether it should be before the current item or after 
+                the previous one...)
+        2.6. if symbol:
+            2.7. put the space between them
+            
+The problem I see now is that I don't know how computer will read the float number. 
+'''
+
+'''Another algorythm:
+1. if the first 
+'''
+
+
+# In[ ]:
+
+
+
