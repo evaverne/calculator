@@ -166,54 +166,6 @@ for thing in stack:
         print (stack[0])
 
 
-# In[1]:
-
-'''How to divide my list:
-There are 3 possible scenario. Spacing matters
-1) A*B+(C-D)
-2) A * B + (C - D)
-3) A * B + ( C - D )
-
-3d way is rather obvious. It's just important to put a clear instruction before the input holder. The main disadvantage 
-is that it is not natural, not user-friendly to ask people to put space in between every and each symbol. 
-
-Before I come back to the 2nd way, which seems more complicated to me, I will describe the first one. 
-
-Here A*B+(C-D) a computer should distinguish between the number and the symbol. Thus it will add space every time it 
-meets the following symbol. 
-
-The rules are:
-1. Spaces should be placed between symbols. 
-[...45 - ( 34 +...]
-2. Spaces should be placed between symbols and numbers.
-[123 + 321]
-3. Neighboring digits should not be divided. 
-['123']
-4. Every symbol should be checked. It is unavoidable. 
-
-The algorythm:
-1. First item should go to the list:
-l = ['1']
-2. Starting from the second item, you have to check: 
-    2.2. Is it float or symbol?
-        2.3. if number:
-            2.4. Check the previous item. If it's float:
-                make a seperate list of all the previous items
-                join them(it takes only one argument)
-            2.5. If it's a symbol:
-                put the space between them (not sure yet whether it should be before the current item or after 
-                the previous one...)
-        2.6. if symbol:
-            2.7. put the space between them
-            
-The problem I see now is that I don't know how computer will read the float number. 
-'''
-
-'''Another algorythm:
-1. if the first 
-'''
-
-
 # In[ ]:
 
 
